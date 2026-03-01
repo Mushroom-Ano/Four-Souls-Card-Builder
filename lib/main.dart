@@ -11,20 +11,50 @@ class FourSoulsCardApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final offset = Offset(0.4, 0.7);
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Colors.black,
-        body: Center(
+      home: CardView(),
+    );
+  }
+}
+
+class CardView extends StatefulWidget {
+  const CardView({super.key});
+
+  @override
+  State<CardView> createState() => _CardViewState();
+}
+
+class _CardViewState extends State<CardView> {
+  Offset _rotation = Offset.zero;
+
+  void _onHover(PointerEvent event) {
+    final size = MediaQuery.of(context).size;
+    final dx = (event.localPosition.dx / size.width - 0.5) * 2;
+    final dy = (event.localPosition.dy / size.height - 0.5) * 2;
+    setState(() {
+      _rotation = Offset(dx * 0.4, dy * 0.4);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: MouseRegion(
+        onHover: _onHover,
+        child: Center(
           child: Transform(
             transform: Matrix4.identity()
-              ..setEntry(3, 2, 0.001) // perspective
-              ..rotateX(offset.dy)
-              ..rotateY(offset.dx),
+              ..setEntry(3, 2, 0.001)
+              ..rotateX(_rotation.dy)
+              ..rotateY(_rotation.dx),
             alignment: FractionalOffset.center,
-            child: const SingleChildScrollView(
-              child: CharacterCard(),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: CharacterCard(
+
+              ),
             ),
           ),
         ),
@@ -46,9 +76,11 @@ class CharacterCard extends StatelessWidget {
         children: [
           // card background image
           Positioned.fill(
+
             child: Image.asset(
               'assets/cards/blank-character.png',
               fit: BoxFit.fill,
+              
               
 
             ),
