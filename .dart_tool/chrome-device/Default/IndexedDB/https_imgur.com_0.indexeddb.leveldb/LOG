@@ -1,0 +1,10 @@
+2026/03/01-18:38:37.130 75cc Creating DB C:\Users\anola\AppData\Local\Temp\flutter_tools.eeec5253\flutter_tools_chrome_device.e9e5461a\Default\IndexedDB\https_imgur.com_0.indexeddb.leveldb since it was missing.
+2026/03/01-18:38:37.135 75cc Reusing MANIFEST C:\Users\anola\AppData\Local\Temp\flutter_tools.eeec5253\flutter_tools_chrome_device.e9e5461a\Default\IndexedDB\https_imgur.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/03/01-18:38:37.171 75c0 Level-0 table #5: started
+2026/03/01-18:38:37.175 75c0 Level-0 table #5: 1607 bytes OK
+2026/03/01-18:38:37.178 75c0 Delete type=0 #3
+2026/03/01-18:38:37.178 75c0 Manual compaction at level-0 from '\x00\x02\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x03\x00\x00\x00' @ 0 : 0; will stop at (end)
+2026/03/01-18:38:41.083 75c0 Level-0 table #7: started
+2026/03/01-18:38:41.086 75c0 Level-0 table #7: 3739 bytes OK
+2026/03/01-18:38:41.088 75c0 Delete type=0 #4
+2026/03/01-18:38:41.088 5964 Manual compaction at level-0 from '\x00\x05\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x06\x00\x00\x00' @ 0 : 0; will stop at (end)
