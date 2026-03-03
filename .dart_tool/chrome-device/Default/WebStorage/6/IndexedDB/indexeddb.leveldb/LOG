@@ -1,6 +1,16 @@
-2026/03/01-18:56:14.861 7678 Creating DB C:\Users\anola\AppData\Local\Temp\flutter_tools.a0a2919c\flutter_tools_chrome_device.80db9ed2\Default\WebStorage\6\IndexedDB\indexeddb.leveldb since it was missing.
-2026/03/01-18:56:14.866 7678 Reusing MANIFEST C:\Users\anola\AppData\Local\Temp\flutter_tools.a0a2919c\flutter_tools_chrome_device.80db9ed2\Default\WebStorage\6\IndexedDB\indexeddb.leveldb/MANIFEST-000001
-2026/03/01-18:57:10.699 85ac Level-0 table #5: started
-2026/03/01-18:57:10.700 85ac Level-0 table #5: 7980 bytes OK
-2026/03/01-18:57:10.702 85ac Delete type=0 #3
-2026/03/01-18:57:10.703 2d38 Manual compaction at level-0 from '\x00\x02\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x03\x00\x00\x00' @ 0 : 0; will stop at (end)
+2026/03/03-16:04:50.771 5734 Reusing MANIFEST C:\Users\anola\AppData\Local\Temp\flutter_tools.f356b10e\flutter_tools_chrome_device.a6472d76\Default\WebStorage\6\IndexedDB\indexeddb.leveldb/MANIFEST-000001
+2026/03/03-16:04:50.771 5734 Recovering log #13
+2026/03/03-16:04:50.771 5734 Reusing old log C:\Users\anola\AppData\Local\Temp\flutter_tools.f356b10e\flutter_tools_chrome_device.a6472d76\Default\WebStorage\6\IndexedDB\indexeddb.leveldb/000013.log 
+2026/03/03-16:04:50.772 5734 Delete type=0 #4
+2026/03/03-16:04:50.772 5734 Delete type=2 #5
+2026/03/03-16:04:50.780 83ac Level-0 table #18: started
+2026/03/03-16:04:50.782 83ac Level-0 table #18: 56236 bytes OK
+2026/03/03-16:04:50.783 83ac Delete type=0 #13
+2026/03/03-16:04:50.784 e8c Manual compaction at level-0 from '\x00\x05\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x06\x00\x00\x00' @ 0 : 0; will stop at (end)
+2026/03/03-16:04:50.784 e8c Manual compaction at level-1 from '\x00\x05\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x06\x00\x00\x00' @ 0 : 0; will stop at '\x00\x07\x00\x00\xc8\x11\x00L\x00o\x00g\x00s\x00R\x00e\x00q\x00u\x00e\x00s\x00t\x00s\x00S\x00t\x00o\x00r\x00e' @ 1205 : 1
+2026/03/03-16:04:50.784 e8c Compacting 1@1 + 1@2 files
+2026/03/03-16:04:50.786 e8c Generated table #19@1: 61 keys, 1396 bytes
+2026/03/03-16:04:50.786 e8c Compacted 1@1 + 1@2 files => 1396 bytes
+2026/03/03-16:04:50.787 e8c compacted to: files[ 0 0 1 0 0 0 0 ]
+2026/03/03-16:04:50.787 e8c Delete type=2 #18
+2026/03/03-16:04:50.787 e8c Manual compaction at level-1 from '\x00\x07\x00\x00\xc8\x11\x00L\x00o\x00g\x00s\x00R\x00e\x00q\x00u\x00e\x00s\x00t\x00s\x00S\x00t\x00o\x00r\x00e' @ 1205 : 1 .. '\x00\x06\x00\x00\x00' @ 0 : 0; will stop at (end)

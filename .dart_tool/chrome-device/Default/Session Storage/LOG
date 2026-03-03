@@ -1,13 +1,19 @@
-2026/03/03-12:35:22.276 3f5c Reusing MANIFEST C:\Users\anola\AppData\Local\Temp\flutter_tools.279b739b\flutter_tools_chrome_device.d3d5403\Default\Session Storage/MANIFEST-000001
-2026/03/03-12:35:22.276 3f5c Recovering log #41
-2026/03/03-12:35:22.278 3f5c Reusing old log C:\Users\anola\AppData\Local\Temp\flutter_tools.279b739b\flutter_tools_chrome_device.d3d5403\Default\Session Storage/000041.log 
-2026/03/03-12:35:22.279 3f5c Delete type=0 #3
-2026/03/03-12:35:22.279 3f5c Delete type=0 #6
-2026/03/03-12:35:22.279 3f5c Delete type=2 #7
-2026/03/03-12:35:22.279 3f5c Delete type=0 #9
-2026/03/03-12:35:22.279 3f5c Delete type=2 #10
-2026/03/03-12:35:22.279 3f5c Delete type=0 #12
-2026/03/03-12:35:22.279 3f5c Delete type=2 #13
-2026/03/03-12:35:22.279 3f5c Delete type=0 #17
-2026/03/03-12:35:22.279 3f5c Delete type=2 #19
-2026/03/03-12:35:22.279 3f5c Delete type=0 #36
+2026/03/03-19:50:03.177 8018 Reusing MANIFEST C:\Users\anola\AppData\Local\Temp\flutter_tools.368b3631\flutter_tools_chrome_device.7b3adce4\Default\Session Storage/MANIFEST-000001
+2026/03/03-19:50:03.177 8018 Recovering log #47
+2026/03/03-19:50:03.179 8018 Reusing old log C:\Users\anola\AppData\Local\Temp\flutter_tools.368b3631\flutter_tools_chrome_device.7b3adce4\Default\Session Storage/000047.log 
+2026/03/03-19:50:03.180 8018 Delete type=0 #3
+2026/03/03-19:50:03.180 8018 Delete type=0 #6
+2026/03/03-19:50:03.180 8018 Delete type=2 #7
+2026/03/03-19:50:03.180 8018 Delete type=0 #9
+2026/03/03-19:50:03.180 8018 Delete type=2 #10
+2026/03/03-19:50:03.180 8018 Delete type=0 #12
+2026/03/03-19:50:03.180 8018 Delete type=2 #13
+2026/03/03-19:50:03.180 8018 Delete type=0 #17
+2026/03/03-19:50:03.181 8018 Delete type=2 #19
+2026/03/03-19:50:03.181 8018 Delete type=0 #36
+2026/03/03-19:50:03.181 8018 Delete type=2 #38
+2026/03/03-19:50:03.181 8018 Delete type=2 #40
+2026/03/03-19:50:03.181 8018 Delete type=0 #41
+2026/03/03-22:38:20.352 8754 Level-0 table #52: started
+2026/03/03-22:38:20.357 8754 Level-0 table #52: 106484 bytes OK
+2026/03/03-22:38:20.359 8754 Delete type=0 #47

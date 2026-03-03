@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_application_1/constants.dart';
 import '../templates.dart';
 import '../widgets/character_card.dart';
 
@@ -26,18 +27,22 @@ class CardView extends StatefulWidget {
 }
 
 class _CardViewState extends State<CardView> {
-  Offset _rotation = Offset.zero;
   int _bgIndex = 0;
   int _tmIndex = 0;
   Uint8List? _customImageBytes;
+  final ValueNotifier<Offset> _rotation = ValueNotifier(Offset.zero);
+
+  @override
+  void dispose() {
+    _rotation.dispose();
+    super.dispose();
+  }
 
   void _onHover(PointerEvent event) {
     final size = MediaQuery.of(context).size;
     final dx = (event.localPosition.dx / size.width - 0.5) * 2;
     final dy = (event.localPosition.dy / size.height - 0.5) * 2;
-    setState(() {
-      _rotation = Offset(dx * 0.4, dy * 0.4);
-    });
+    _rotation.value = Offset(dx * 0.4, dy * 0.4);
   }
 
   Future<void> _pickImage() async {
@@ -67,44 +72,62 @@ class _CardViewState extends State<CardView> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Transform(
-                transform: Matrix4.identity()
-                  ..setEntry(3, 2, 0.001)
-                  ..rotateX(_rotation.dy)
-                  ..rotateY(_rotation.dx),
-                alignment: FractionalOffset.center,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: CharacterCard(
-                    backgroundPath: _backgrounds[_bgIndex],
-                    templatePath: characterTemplates[_tmIndex],
-                    customImageBytes: _customImageBytes,
-                  ),
-                ),
+              _HoverCard(
+                rotation: _rotation,
+                backgroundPath: _backgrounds[_bgIndex],
+                templatePath: characterTemplates[_tmIndex],
+                customImageBytes: _customImageBytes,
               ),
               const SizedBox(height: 20),
-              Row(
+              Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   // Background switcher
-                  IconButton(
-                    onPressed: () => setState(() => _bgIndex = (_bgIndex - 1 + _backgrounds.length) % _backgrounds.length),
-                    icon: const Icon(Icons.arrow_back, color: Colors.white),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                    IconButton(
+                      onPressed: () => setState(() => _bgIndex = (_bgIndex - 1 + _backgrounds.length) % _backgrounds.length),
+                      icon: const Icon(Icons.arrow_back, color: Colors.white),
+                    ),
+                    Text(
+                      "Background",
+                      style:TextStyle(
+                        color: Colors.white,
+                        fontFamily: fontBody,
+                        fontSize: 40,
+                      )
+                    ),
+                    IconButton(
+                      onPressed: () => setState(() => _bgIndex = (_bgIndex + 1) % _backgrounds.length),
+                      icon: const Icon(Icons.arrow_forward, color: Colors.white),
+                    ),
+                  ]),
+                  //Background Index
+                  Text(_bgIndex.toString(), style: const TextStyle(color: Colors.white, fontSize: 32, fontFamily: fontBody)),
+                  // Background switcher
+                  Text(
+                    "Template",
+                    style:TextStyle(
+                      color: Colors.white,
+                      fontFamily: fontBody,
+                      fontSize: 40,
+                    )
                   ),
-                  Text(_bgIndex.toString(), style: const TextStyle(color: Colors.white, fontSize: 16)),
-                  IconButton(
-                    onPressed: () => setState(() => _bgIndex = (_bgIndex + 1) % _backgrounds.length),
-                    icon: const Icon(Icons.arrow_forward, color: Colors.white),
-                  ),
-                  // Template switcher
-                  IconButton(
-                    onPressed: () => setState(() => _tmIndex = (_tmIndex - 1 + characterTemplates.length) % characterTemplates.length),
-                    icon: const Icon(Icons.arrow_back, color: Colors.white),
-                  ),
-                  Text(_tmIndex.toString(), style: const TextStyle(color: Colors.white, fontSize: 16)),
-                  IconButton(
-                    onPressed: () => setState(() => _tmIndex = (_tmIndex + 1) % characterTemplates.length),
-                    icon: const Icon(Icons.arrow_forward, color: Colors.white),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Template switcher
+                      IconButton(
+                        onPressed: () => setState(() => _tmIndex = (_tmIndex - 1 + characterTemplates.length) % characterTemplates.length),
+                        icon: const Icon(Icons.arrow_back, color: Colors.white),
+                      ),
+                      Text(_tmIndex.toString(), style: const TextStyle(color: Colors.white, fontSize: 32, fontFamily: fontBody)),
+                      IconButton(
+                        onPressed: () => setState(() => _tmIndex = (_tmIndex + 1) % characterTemplates.length),
+                        icon: const Icon(Icons.arrow_forward, color: Colors.white),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -112,15 +135,66 @@ class _CardViewState extends State<CardView> {
               ElevatedButton.icon(
                 onPressed: _pickImage,
                 icon: const Icon(Icons.upload_file),
-                label: const Text('Upload Image'),
+                label: const Text(
+                    "Upload Image",
+                    style:TextStyle(
+                      color: Colors.black,
+                      fontFamily: fontBody,
+                      fontSize: 30,
+                    )
+                  ),
               ),
               const SizedBox(height: 8),
               ElevatedButton.icon(
                 onPressed: _pickImage,
-                label: const Text('Add Sticker'),
+                label: const Text(
+                    "Add Sticker",
+                    style:TextStyle(
+                      color: Colors.black,
+                      fontFamily: fontBody,
+                      fontSize: 30,
+                    )
+                  ),
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _HoverCard extends StatelessWidget {
+  final ValueNotifier<Offset> rotation;
+  final String backgroundPath;
+  final String templatePath;
+  final Uint8List? customImageBytes;
+
+  const _HoverCard({
+    required this.rotation,
+    required this.backgroundPath,
+    required this.templatePath,
+    this.customImageBytes,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<Offset>(
+      valueListenable: rotation,
+      builder: (context, rot, child) => Transform(
+        transform: Matrix4.identity()
+          ..setEntry(3, 2, 0.001)
+          ..rotateX(rot.dy)
+          ..rotateY(rot.dx),
+        alignment: FractionalOffset.center,
+        child: child,
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: CharacterCard(
+          backgroundPath: backgroundPath,
+          templatePath: templatePath,
+          customImageBytes: customImageBytes,
         ),
       ),
     );

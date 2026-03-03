@@ -6,9 +6,11 @@ class EditableCardField extends StatefulWidget {
   final double fontSize;
   final Color fontColor;
   final double fontHeight;
-  final int maxLines;
+  final int? maxLines;
   final TextAlign textAlign;
   final double? width;
+  final VoidCallback? onDelete;
+  final bool autofocus;
 
   const EditableCardField({
     super.key,
@@ -17,9 +19,11 @@ class EditableCardField extends StatefulWidget {
     required this.fontSize,
     required this.fontColor,
     required this.fontHeight,
-    this.maxLines = 1,
+    this.maxLines,
     this.textAlign = TextAlign.center,
     this.width,
+    this.onDelete,
+    this.autofocus = false,
   });
 
   @override
@@ -27,28 +31,26 @@ class EditableCardField extends StatefulWidget {
 }
 
 class _EditableCardFieldState extends State<EditableCardField> {
-  late String _text;
-  bool _editing = false;
   late TextEditingController _controller;
+  final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    _text = widget.initialText;
-    _controller = TextEditingController(text: _text);
+    _controller = TextEditingController(text: widget.initialText);
+    _controller.addListener(() => setState(() {}));
+    _focusNode.addListener(() {
+      if (!_focusNode.hasFocus && _controller.text.isEmpty) {
+        widget.onDelete?.call();
+      }
+    });
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _focusNode.dispose();
     super.dispose();
-  }
-
-  void _save() {
-    setState(() {
-      _text = _controller.text.isEmpty ? widget.initialText : _controller.text;
-      _editing = false;
-    });
   }
 
   @override
@@ -60,40 +62,23 @@ class _EditableCardFieldState extends State<EditableCardField> {
       color: widget.fontColor,
     );
 
-    Widget child;
-    if (_editing) {
-      child = TextField(
-        controller: _controller,
-        autofocus: true,
-        maxLines: widget.maxLines,
-        textAlign: widget.textAlign,
-        style: style,
-        decoration: const InputDecoration(
-          isDense: true,
-          contentPadding: EdgeInsets.zero,
-          border: InputBorder.none,
-        ),
-        onSubmitted: widget.maxLines == 1 ? (_) => _save() : null,
-        onTapOutside: (_) => _save(),
-      );
-    } else {
-      child = GestureDetector(
-        onTap: () {
-          _controller.text = _text;
-          setState(() => _editing = true);
-        },
-        child: Text(
-          _text,
-          textAlign: widget.textAlign,
-          maxLines: widget.maxLines,
-          overflow: TextOverflow.ellipsis,
-          style: style,
-        ),
-      );
-    }
+    Widget child = TextField(
+      controller: _controller,
+      focusNode: _focusNode,
+      autofocus: widget.autofocus,
+      maxLines: widget.maxLines,
+      textAlign: widget.textAlign,
+      style: style,
+      decoration: const InputDecoration(
+        isDense: true,
+        contentPadding: EdgeInsets.zero,
+        border: InputBorder.none,
+      ),
+    );
 
     if (widget.width != null) {
-      return SizedBox(width: widget.width, child: child);
+      final width = widget.width! + _controller.text.length * 20.0;
+      return SizedBox(width: width, child: child);
     }
     return child;
   }
