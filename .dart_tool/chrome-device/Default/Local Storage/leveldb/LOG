@@ -1,4 +1,9 @@
-2026/03/01-19:05:02.049 8744 Reusing MANIFEST C:\Users\anola\AppData\Local\Temp\flutter_tools.7a6806e9\flutter_tools_chrome_device.83c1d8c8\Default\Local Storage\leveldb/MANIFEST-000001
-2026/03/01-19:05:02.052 8744 Recovering log #4
-2026/03/01-19:05:02.053 8744 Reusing old log C:\Users\anola\AppData\Local\Temp\flutter_tools.7a6806e9\flutter_tools_chrome_device.83c1d8c8\Default\Local Storage\leveldb/000004.log 
-2026/03/01-19:05:02.053 8744 Delete type=0 #3
+2026/03/03-12:35:22.216 3f5c Reusing MANIFEST C:\Users\anola\AppData\Local\Temp\flutter_tools.279b739b\flutter_tools_chrome_device.d3d5403\Default\Local Storage\leveldb/MANIFEST-000001
+2026/03/03-12:35:22.219 3f5c Recovering log #33
+2026/03/03-12:35:22.220 3f5c Reusing old log C:\Users\anola\AppData\Local\Temp\flutter_tools.279b739b\flutter_tools_chrome_device.d3d5403\Default\Local Storage\leveldb/000033.log 
+2026/03/03-12:35:22.220 3f5c Delete type=0 #3
+2026/03/03-12:35:22.220 3f5c Delete type=0 #4
+2026/03/03-12:35:22.220 3f5c Delete type=2 #7
+2026/03/03-12:35:22.220 3f5c Delete type=0 #8
+2026/03/03-12:35:22.221 3f5c Delete type=0 #10
+2026/03/03-12:35:22.221 3f5c Delete type=2 #11
