@@ -83,14 +83,7 @@ class _CardViewState extends State<CardView> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   // Background switcher
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                    IconButton(
-                      onPressed: () => setState(() => _bgIndex = (_bgIndex - 1 + _backgrounds.length) % _backgrounds.length),
-                      icon: const Icon(Icons.arrow_back, color: Colors.white),
-                    ),
-                    Text(
+                  Text(
                       "Background",
                       style:TextStyle(
                         color: Colors.white,
@@ -98,13 +91,20 @@ class _CardViewState extends State<CardView> {
                         fontSize: 40,
                       )
                     ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                    IconButton(
+                      onPressed: () => setState(() => _bgIndex = (_bgIndex - 1 + _backgrounds.length) % _backgrounds.length),
+                      icon: const Icon(Icons.arrow_back, color: Colors.white),
+                    ),
+                    Text(_bgIndex.toString(), style: const TextStyle(color: Colors.white, fontSize: 32, fontFamily: fontBody)),
                     IconButton(
                       onPressed: () => setState(() => _bgIndex = (_bgIndex + 1) % _backgrounds.length),
                       icon: const Icon(Icons.arrow_forward, color: Colors.white),
                     ),
                   ]),
-                  //Background Index
-                  Text(_bgIndex.toString(), style: const TextStyle(color: Colors.white, fontSize: 32, fontFamily: fontBody)),
+                  //Background Inde
                   // Background switcher
                   Text(
                     "Template",
@@ -147,6 +147,7 @@ class _CardViewState extends State<CardView> {
               const SizedBox(height: 8),
               ElevatedButton.icon(
                 onPressed: _pickImage,
+                icon: const Icon(Icons.add_to_photos),
                 label: const Text(
                     "Add Sticker",
                     style:TextStyle(
