@@ -1,13 +1,18 @@
-2026/03/05-15:03:16.952 41d8 Reusing MANIFEST C:\Users\anola\AppData\Local\Temp\flutter_tools.e51e0317\flutter_tools_chrome_device.bfef9418\Default\shared_proto_db/MANIFEST-000001
-2026/03/05-15:03:16.952 41d8 Recovering log #19
-2026/03/05-15:03:16.952 41d8 Reusing old log C:\Users\anola\AppData\Local\Temp\flutter_tools.e51e0317\flutter_tools_chrome_device.bfef9418\Default\shared_proto_db/000019.log 
-2026/03/05-15:03:16.953 41d8 Delete type=0 #3
-2026/03/05-15:03:16.953 41d8 Delete type=0 #4
-2026/03/05-15:03:16.953 41d8 Delete type=0 #7
-2026/03/05-15:03:16.953 41d8 Delete type=2 #8
-2026/03/05-15:03:16.953 41d8 Delete type=0 #10
-2026/03/05-15:03:16.953 41d8 Delete type=2 #11
-2026/03/05-15:03:16.953 41d8 Delete type=0 #13
-2026/03/05-15:03:16.953 41d8 Delete type=2 #14
-2026/03/05-15:03:16.953 41d8 Delete type=0 #16
-2026/03/05-15:03:16.953 41d8 Delete type=2 #17
+2026/03/05-19:40:54.657 82c8 Reusing MANIFEST C:\Users\anola\AppData\Local\Temp\flutter_tools.32391c03\flutter_tools_chrome_device.1f8fed93\Default\shared_proto_db/MANIFEST-000001
+2026/03/05-19:40:54.657 82c8 Recovering log #26
+2026/03/05-19:40:54.659 82c8 Reusing old log C:\Users\anola\AppData\Local\Temp\flutter_tools.32391c03\flutter_tools_chrome_device.1f8fed93\Default\shared_proto_db/000026.log 
+2026/03/05-19:40:54.659 82c8 Delete type=0 #3
+2026/03/05-19:40:54.659 82c8 Delete type=0 #4
+2026/03/05-19:40:54.659 82c8 Delete type=0 #7
+2026/03/05-19:40:54.659 82c8 Delete type=2 #8
+2026/03/05-19:40:54.659 82c8 Delete type=0 #10
+2026/03/05-19:40:54.659 82c8 Delete type=2 #11
+2026/03/05-19:40:54.659 82c8 Delete type=0 #13
+2026/03/05-19:40:54.659 82c8 Delete type=2 #14
+2026/03/05-19:40:54.659 82c8 Delete type=0 #16
+2026/03/05-19:40:54.659 82c8 Delete type=2 #17
+2026/03/05-19:40:54.659 82c8 Delete type=0 #19
+2026/03/05-19:40:54.659 82c8 Delete type=0 #23
+2026/03/05-19:41:07.797 8050 Level-0 table #30: started
+2026/03/05-19:41:07.800 8050 Level-0 table #30: 129717 bytes OK
+2026/03/05-19:41:07.802 8050 Delete type=0 #26

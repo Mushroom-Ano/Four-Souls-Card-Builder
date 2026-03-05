@@ -63,12 +63,16 @@ flutter:
     - assets/cards/templates/treasure/
     - assets/cards/templates/boss/
     - assets/cards/templates/monster/
-    - assets/cards/templates/room/
+    - assets/cards/templates/room (broken)/
     - assets/cards/templates/happenings/
     - assets/cards/templates/loots/
     - assets/cards/backgrounds/
     - assets/cards/images/
     - assets/extras/
+    - assets/stickers/
+    - assets/stickers/Custom/
+    - assets/stickers/Custom/Price Tags/
+    - assets/stickers/Custom/Price Tags/Old Version/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

@@ -18,6 +18,26 @@ const templateCategories = [
 ];
 
 const _backgroundsFolder = 'assets/cards/backgrounds/';
+const _stickersRoot = 'assets/stickers/';
+
+// Stickers grouped by subfolder name; root-level images go into "General".
+Future<Map<String, List<String>>> loadStickers() async {
+  final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
+  final result = <String, List<String>>{};
+
+  for (final path in manifest.listAssets()
+      .where((p) => p.startsWith(_stickersRoot) && p.endsWith('.png'))
+      .toList()
+    ..sort()) {
+    final relative = path.substring(_stickersRoot.length);
+    final slash = relative.indexOf('/');
+    final category = slash == -1
+        ? 'General'
+        : relative.substring(0, slash).replaceAll(RegExp(r'^\d+\.\s*'), '');
+    result.putIfAbsent(category, () => []).add(path);
+  }
+  return result;
+}
 
 Future<List<String>> loadBackgrounds() async {
   final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
@@ -27,8 +47,7 @@ Future<List<String>> loadBackgrounds() async {
     ..sort();
 }
 
-/// Returns a flat list of (categoryName, assetPath) pairs, ordered by category
-/// then alphabetically within each category.
+// Returns (categoryName, assetPath) pairs ordered by category then filename.
 Future<List<(String, String)>> loadAllTemplates() async {
   final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
   final allAssets = manifest.listAssets();
