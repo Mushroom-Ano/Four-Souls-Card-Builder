@@ -372,7 +372,12 @@ class _StickerPanel extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          for (final entry in stickersByCategory.entries) ...[
+          for (final entry in stickersByCategory.entries.toList()
+            ..sort((a, b) {
+              if (a.key == 'Extras') return 1;
+              if (b.key == 'Extras') return -1;
+              return a.key.compareTo(b.key);
+            })) ...[
             Padding(
               padding: const EdgeInsets.only(top: 8, bottom: 4),
               child: Text(
