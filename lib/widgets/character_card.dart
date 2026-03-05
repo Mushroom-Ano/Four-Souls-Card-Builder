@@ -6,12 +6,14 @@ class CharacterCard extends StatelessWidget {
   final String backgroundPath;
   final String templatePath;
   final Uint8List? customImageBytes;
+  final bool showHandles;
 
   const CharacterCard({
     super.key,
     required this.backgroundPath,
     required this.templatePath,
     this.customImageBytes,
+    this.showHandles = true,
   });
 
   @override
@@ -35,8 +37,7 @@ class CharacterCard extends StatelessWidget {
           Positioned.fill(
             child: Image.asset(templatePath, fit: BoxFit.fill),
           ),
-          //Stats and stuff.
-          CharacterTemplate(),
+          CharacterTemplate(showHandles: showHandles),
         ],
       ),
     );

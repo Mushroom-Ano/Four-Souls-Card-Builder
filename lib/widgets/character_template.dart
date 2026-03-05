@@ -3,7 +3,8 @@ import '../constants.dart';
 import 'editable_card_field.dart';
 
 class CharacterTemplate extends StatefulWidget {
-  const CharacterTemplate({super.key});
+  final bool showHandles;
+  const CharacterTemplate({super.key, this.showHandles = true});
 
   @override
   State<CharacterTemplate> createState() => _CharacterTemplateState();
@@ -41,22 +42,24 @@ class _CharacterTemplateState extends State<CharacterTemplate> {
           ),
         ),
         for (final f in _fields) ...[
-          Positioned(
-            left: f.position.dx - 18,
-            top: f.position.dy,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onPanUpdate: (d) => setState(() => f.position += d.delta),
-              child: MouseRegion(
-                cursor: SystemMouseCursors.grab,
-                child: Icon(
-                  Icons.drag_indicator,
-                  size: 16,
-                  color: Colors.grey.withOpacity(0.6),
+          // Drag handle — hidden during export
+          if (widget.showHandles)
+            Positioned(
+              left: f.position.dx - 18,
+              top: f.position.dy,
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onPanUpdate: (d) => setState(() => f.position += d.delta),
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.grab,
+                  child: Icon(
+                    Icons.drag_indicator,
+                    size: 16,
+                    color: Colors.grey.withOpacity(0.6),
+                  ),
                 ),
               ),
             ),
-          ),
           // Text field
           Positioned(
             key: f.key,
