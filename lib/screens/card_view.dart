@@ -8,18 +8,6 @@ import '../templates.dart';
 import '../widgets/character_card.dart';
 import '../utils/export_helper.dart';
 
-const _backgrounds = [
-  'assets/cards/backgrounds/Background_Basement.png',
-  'assets/cards/backgrounds/Background_Depths.png',
-  'assets/cards/backgrounds/Background_Downpour.png',
-  'assets/cards/backgrounds/Background_Dross.png',
-  'assets/cards/backgrounds/Background_Steven.png',
-  'assets/cards/backgrounds/Character_Realistic_DarkSiders.png',
-  'assets/cards/backgrounds/Cus_Antibirth_Mitboy.png',
-  'assets/cards/backgrounds/Cus_Library_Mitboy.png',
-];
-
-const _bgNames = ['Default', 'Arcade', 'Mines', 'Tainted'];
 
 class CardView extends StatefulWidget {
   const CardView({super.key});
@@ -31,6 +19,7 @@ class CardView extends StatefulWidget {
 class _CardViewState extends State<CardView> {
   int _bgIndex = 0;
   int _tmIndex = 0;
+  List<String> _backgrounds = [];
   List<(String, String)> _templates = [];
   Uint8List? _customImageBytes;
   final ValueNotifier<Offset> _rotation = ValueNotifier(Offset.zero);
@@ -40,6 +29,7 @@ class _CardViewState extends State<CardView> {
   @override
   void initState() {
     super.initState();
+    loadBackgrounds().then((b) => setState(() => _backgrounds = b));
     loadAllTemplates().then((t) => setState(() => _templates = t));
   }
 
@@ -49,6 +39,9 @@ class _CardViewState extends State<CardView> {
     super.dispose();
   }
 
+  String get _currentBgName => _backgrounds.isNotEmpty
+      ? _backgrounds[_bgIndex].split('/').last.replaceAll('.png', '').replaceAll('_', ' ')
+      : '';
   String get _currentTemplatePath => _templates.isNotEmpty ? _templates[_tmIndex].$2 : '';
   String get _currentCategory => _templates.isNotEmpty ? _templates[_tmIndex].$1 : '';
   String get _currentTemplateName {
@@ -115,7 +108,7 @@ class _CardViewState extends State<CardView> {
               child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (_templates.isNotEmpty)
+              if (_templates.isNotEmpty && _backgrounds.isNotEmpty)
                 _HoverCard(
                   rotation: _rotation,
                   backgroundPath: _backgrounds[_bgIndex],
@@ -129,63 +122,39 @@ class _CardViewState extends State<CardView> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   // Background switcher
-                  Text(
-                      "Background",
-                      style:TextStyle(
-                        color: Colors.white,
-                        fontFamily: fontBody,
-                        fontSize: 40,
-                      )
-                    ),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                    IconButton(
-                      onPressed: () => setState(() => _bgIndex = (_bgIndex - 1 + _backgrounds.length) % _backgrounds.length),
-                      icon: const Icon(Icons.arrow_back, color: Colors.white),
-                    ),
-                    Text(_bgIndex.toString(), style: const TextStyle(color: Colors.white, fontSize: 32, fontFamily: fontBody)),
-                    IconButton(
-                      onPressed: () => setState(() => _bgIndex = (_bgIndex + 1) % _backgrounds.length),
-                      icon: const Icon(Icons.arrow_forward, color: Colors.white),
-                    ),
-                  ]),
+                      IconButton(
+                        onPressed: _backgrounds.isEmpty ? null : () => setState(() => _bgIndex = (_bgIndex - 1 + _backgrounds.length) % _backgrounds.length),
+                        icon: const Icon(Icons.arrow_back, color: Colors.white),
+                      ),
+                      Text("Background", style: TextStyle(color: Colors.white, fontFamily: fontBody, fontSize: 40)),
+                      IconButton(
+                        onPressed: _backgrounds.isEmpty ? null : () => setState(() => _bgIndex = (_bgIndex + 1) % _backgrounds.length),
+                        icon: const Icon(Icons.arrow_forward, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                  Text(_currentBgName, style: TextStyle(color: Colors.white70, fontFamily: fontBody, fontSize: 20, letterSpacing: 1.5)),
                   // Template switcher
-                  Text(
-                    "Template",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: fontBody,
-                      fontSize: 40,
-                    ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        onPressed: _templates.isEmpty ? null : () => setState(() => _tmIndex = (_tmIndex - 1 + _templates.length) % _templates.length),
+                        icon: const Icon(Icons.arrow_back, color: Colors.white),
+                      ),
+                      Text("Template", style: TextStyle(color: Colors.white, fontFamily: fontBody, fontSize: 40)),
+                      IconButton(
+                        onPressed: _templates.isEmpty ? null : () => setState(() => _tmIndex = (_tmIndex + 1) % _templates.length),
+                        icon: const Icon(Icons.arrow_forward, color: Colors.white),
+                      ),
+                    ],
                   ),
                   if (_templates.isNotEmpty) ...[
-                    Text(
-                      _currentCategory,
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontFamily: fontBody,
-                        fontSize: 20,
-                        letterSpacing: 1.5,
-                      ),
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          onPressed: () => setState(() => _tmIndex = (_tmIndex - 1 + _templates.length) % _templates.length),
-                          icon: const Icon(Icons.arrow_back, color: Colors.white),
-                        ),
-                        Text(
-                          _currentTemplateName,
-                          style: const TextStyle(color: Colors.white, fontSize: 18, fontFamily: fontBody),
-                        ),
-                        IconButton(
-                          onPressed: () => setState(() => _tmIndex = (_tmIndex + 1) % _templates.length),
-                          icon: const Icon(Icons.arrow_forward, color: Colors.white),
-                        ),
-                      ],
-                    ),
+                    Text(_currentCategory, style: TextStyle(color: Colors.white70, fontFamily: fontBody, fontSize: 20, letterSpacing: 1.5)),
+                    Text(_currentTemplateName, style: const TextStyle(color: Colors.white, fontSize: 18, fontFamily: fontBody)),
                   ],
                 ],
               ),

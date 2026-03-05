@@ -17,6 +17,16 @@ const templateCategories = [
   TemplateCategory(name: 'Loots',          folder: 'assets/cards/templates/loots/'),
 ];
 
+const _backgroundsFolder = 'assets/cards/backgrounds/';
+
+Future<List<String>> loadBackgrounds() async {
+  final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
+  return manifest.listAssets()
+      .where((p) => p.startsWith(_backgroundsFolder) && p.endsWith('.png'))
+      .toList()
+    ..sort();
+}
+
 /// Returns a flat list of (categoryName, assetPath) pairs, ordered by category
 /// then alphabetically within each category.
 Future<List<(String, String)>> loadAllTemplates() async {
