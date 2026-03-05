@@ -70,9 +70,11 @@ flutter:
     - assets/cards/images/
     - assets/extras/
     - assets/stickers/
-    - assets/stickers/Custom/
-    - assets/stickers/Custom/Price Tags/
-    - assets/stickers/Custom/Price Tags/Old Version/
+    - assets/stickers/Extras/
+    - assets/stickers/Powers/
+    - assets/stickers/Price Tags/
+    - assets/stickers/Price Tags/Old Version/
+    - assets/stickers/Souls/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
