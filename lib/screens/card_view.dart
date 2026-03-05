@@ -31,15 +31,30 @@ class CardView extends StatefulWidget {
 class _CardViewState extends State<CardView> {
   int _bgIndex = 0;
   int _tmIndex = 0;
+  List<(String, String)> _templates = [];
   Uint8List? _customImageBytes;
   final ValueNotifier<Offset> _rotation = ValueNotifier(Offset.zero);
   final GlobalKey _repaintKey = GlobalKey();
   bool _isExporting = false;
 
   @override
+  void initState() {
+    super.initState();
+    loadAllTemplates().then((t) => setState(() => _templates = t));
+  }
+
+  @override
   void dispose() {
     _rotation.dispose();
     super.dispose();
+  }
+
+  String get _currentTemplatePath => _templates.isNotEmpty ? _templates[_tmIndex].$2 : '';
+  String get _currentCategory => _templates.isNotEmpty ? _templates[_tmIndex].$1 : '';
+  String get _currentTemplateName {
+    if (_templates.isEmpty) return '';
+    final filename = _currentTemplatePath.split('/').last;
+    return filename.replaceAll('.png', '').replaceAll('_', ' ');
   }
 
   void _onHover(PointerEvent event) {
@@ -100,14 +115,15 @@ class _CardViewState extends State<CardView> {
               child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              _HoverCard(
-                rotation: _rotation,
-                backgroundPath: _backgrounds[_bgIndex],
-                templatePath: characterTemplates[_tmIndex],
-                customImageBytes: _customImageBytes,
-                repaintKey: _repaintKey,
-                showHandles: !_isExporting,
-              ),
+              if (_templates.isNotEmpty)
+                _HoverCard(
+                  rotation: _rotation,
+                  backgroundPath: _backgrounds[_bgIndex],
+                  templatePath: _currentTemplatePath,
+                  customImageBytes: _customImageBytes,
+                  repaintKey: _repaintKey,
+                  showHandles: !_isExporting,
+                ),
               const SizedBox(height: 20),
               Column(
                 mainAxisSize: MainAxisSize.min,
@@ -137,26 +153,40 @@ class _CardViewState extends State<CardView> {
                   // Template switcher
                   Text(
                     "Template",
-                    style:TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
                       fontFamily: fontBody,
                       fontSize: 40,
-                    )
+                    ),
                   ),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        onPressed: () => setState(() => _tmIndex = (_tmIndex - 1 + characterTemplates.length) % characterTemplates.length),
-                        icon: const Icon(Icons.arrow_back, color: Colors.white),
+                  if (_templates.isNotEmpty) ...[
+                    Text(
+                      _currentCategory,
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontFamily: fontBody,
+                        fontSize: 20,
+                        letterSpacing: 1.5,
                       ),
-                      Text(_tmIndex.toString(), style: const TextStyle(color: Colors.white, fontSize: 32, fontFamily: fontBody)),
-                      IconButton(
-                        onPressed: () => setState(() => _tmIndex = (_tmIndex + 1) % characterTemplates.length),
-                        icon: const Icon(Icons.arrow_forward, color: Colors.white),
-                      ),
-                    ],
-                  ),
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          onPressed: () => setState(() => _tmIndex = (_tmIndex - 1 + _templates.length) % _templates.length),
+                          icon: const Icon(Icons.arrow_back, color: Colors.white),
+                        ),
+                        Text(
+                          _currentTemplateName,
+                          style: const TextStyle(color: Colors.white, fontSize: 18, fontFamily: fontBody),
+                        ),
+                        IconButton(
+                          onPressed: () => setState(() => _tmIndex = (_tmIndex + 1) % _templates.length),
+                          icon: const Icon(Icons.arrow_forward, color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ],
                 ],
               ),
               const SizedBox(height: 8),

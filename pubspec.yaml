@@ -61,6 +61,11 @@ flutter:
     - assets/cards/templates/character/
     - assets/cards/templates/startingitems/
     - assets/cards/templates/treasure/
+    - assets/cards/templates/boss/
+    - assets/cards/templates/monster/
+    - assets/cards/templates/room/
+    - assets/cards/templates/happenings/
+    - assets/cards/templates/loots/
     - assets/cards/backgrounds/
     - assets/cards/images/
     - assets/extras/
