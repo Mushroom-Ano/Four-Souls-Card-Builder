@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../constants.dart';
 
 enum FieldMode { type, move }
@@ -177,6 +178,25 @@ class _EditingTextFieldState extends State<_EditingTextField> {
     _focusNode.addListener(() {
       if (!_focusNode.hasFocus) widget.onUnfocus();
     });
+    _focusNode.onKeyEvent = (node, event) {
+      if (event is KeyDownEvent && event.logicalKey == LogicalKeyboardKey.enter) {
+        if (HardwareKeyboard.instance.isShiftPressed) {
+          final sel = _controller.selection;
+          final text = _controller.text;
+          final newText = text.replaceRange(sel.start, sel.end, '\n');
+          _controller.value = TextEditingValue(
+            text: newText,
+            selection: TextSelection.collapsed(offset: sel.start + 1),
+          );
+          widget.onTextChanged(newText);
+          return KeyEventResult.handled;
+        } else {
+          _focusNode.unfocus();
+          return KeyEventResult.handled;
+        }
+      }
+      return KeyEventResult.ignored;
+    };
   }
 
   @override
@@ -188,19 +208,22 @@ class _EditingTextFieldState extends State<_EditingTextField> {
 
   @override
   Widget build(BuildContext context) {
-    // Width grows with content so the text doesn't wrap unexpectedly.
-    final width = 30.0 + _controller.text.length * widget.entry.fontSize * 0.6;
+    final lines = _controller.text.split('\n');
+    final maxLen = lines.fold(0, (m, l) => l.length > m ? l.length : m);
+    final width = 30.0 + maxLen * widget.entry.fontSize * 0.6;
     return SizedBox(
       width: width,
       child: TextField(
         controller: _controller,
         focusNode: _focusNode,
         autofocus: true,
+        maxLines: null,
         onChanged: widget.onTextChanged,
         style: TextStyle(
           fontFamily: widget.entry.font,
           fontSize: widget.entry.fontSize,
           color: Colors.black,
+          height: 1.1,
         ),
         decoration: const InputDecoration(
           isDense: true,

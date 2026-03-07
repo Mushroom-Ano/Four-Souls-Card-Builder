@@ -1,16 +1,28 @@
-2026/03/05-21:09:23.857 9c0c Reusing MANIFEST C:\Users\anola\AppData\Local\Temp\flutter_tools.668f2190\flutter_tools_chrome_device.47655c87\Default\shared_proto_db/MANIFEST-000001
-2026/03/05-21:09:23.857 9c0c Recovering log #29
-2026/03/05-21:09:23.858 9c0c Reusing old log C:\Users\anola\AppData\Local\Temp\flutter_tools.668f2190\flutter_tools_chrome_device.47655c87\Default\shared_proto_db/000029.log 
-2026/03/05-21:09:23.858 9c0c Delete type=0 #3
-2026/03/05-21:09:23.858 9c0c Delete type=0 #4
-2026/03/05-21:09:23.858 9c0c Delete type=0 #7
-2026/03/05-21:09:23.858 9c0c Delete type=2 #8
-2026/03/05-21:09:23.858 9c0c Delete type=0 #10
-2026/03/05-21:09:23.858 9c0c Delete type=2 #11
-2026/03/05-21:09:23.859 9c0c Delete type=0 #13
-2026/03/05-21:09:23.859 9c0c Delete type=2 #14
-2026/03/05-21:09:23.859 9c0c Delete type=0 #16
-2026/03/05-21:09:23.859 9c0c Delete type=2 #17
-2026/03/05-21:09:23.859 9c0c Delete type=0 #19
-2026/03/05-21:09:23.859 9c0c Delete type=0 #23
-2026/03/05-21:09:23.859 9c0c Delete type=0 #26
+2026/03/06-12:10:35.118 5fa4 Reusing MANIFEST C:\Users\anola\AppData\Local\Temp\flutter_tools.1396859b\flutter_tools_chrome_device.a13907cc\Default\shared_proto_db/MANIFEST-000001
+2026/03/06-12:10:35.118 5fa4 Recovering log #29
+2026/03/06-12:10:35.119 5fa4 Reusing old log C:\Users\anola\AppData\Local\Temp\flutter_tools.1396859b\flutter_tools_chrome_device.a13907cc\Default\shared_proto_db/000029.log 
+2026/03/06-12:10:35.120 5fa4 Delete type=0 #3
+2026/03/06-12:10:35.120 5fa4 Delete type=0 #4
+2026/03/06-12:10:35.120 5fa4 Delete type=0 #7
+2026/03/06-12:10:35.120 5fa4 Delete type=2 #8
+2026/03/06-12:10:35.120 5fa4 Delete type=0 #10
+2026/03/06-12:10:35.120 5fa4 Delete type=2 #11
+2026/03/06-12:10:35.120 5fa4 Delete type=0 #13
+2026/03/06-12:10:35.120 5fa4 Delete type=2 #14
+2026/03/06-12:10:35.121 5fa4 Delete type=0 #16
+2026/03/06-12:10:35.121 5fa4 Delete type=2 #17
+2026/03/06-12:10:35.121 5fa4 Delete type=0 #19
+2026/03/06-12:10:35.121 5fa4 Delete type=0 #23
+2026/03/06-12:10:35.121 5fa4 Delete type=0 #26
+2026/03/06-12:10:47.352 47cc Level-0 table #33: started
+2026/03/06-12:10:47.355 47cc Level-0 table #33: 135307 bytes OK
+2026/03/06-12:10:47.356 47cc Delete type=0 #29
+2026/03/06-12:10:47.357 47cc Compacting 4@0 + 1@1 files
+2026/03/06-12:10:47.361 47cc Generated table #34@0: 1664 keys, 237558 bytes
+2026/03/06-12:10:47.361 47cc Compacted 4@0 + 1@1 files => 237558 bytes
+2026/03/06-12:10:47.362 47cc compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/03/06-12:10:47.362 47cc Delete type=2 #21
+2026/03/06-12:10:47.362 47cc Delete type=2 #24
+2026/03/06-12:10:47.362 47cc Delete type=2 #27
+2026/03/06-12:10:47.362 47cc Delete type=2 #30
+2026/03/06-12:10:47.362 47cc Delete type=2 #33
