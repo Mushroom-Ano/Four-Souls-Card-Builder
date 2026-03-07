@@ -1,8 +1,18 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../constants.dart';
 
 enum FieldMode { type, move }
+
+// d.delta from onPanUpdate is in the item's rotated local space.
+// Rotate by +angle to convert back to card (parent) space.
+Offset _toCardSpace(Offset delta, double angle) {
+  if (angle == 0) return delta;
+  final c = cos(angle);
+  final s = sin(angle);
+  return Offset(delta.dx * c - delta.dy * s, delta.dx * s + delta.dy * c);
+}
 
 const _availableFonts = [fontBody, fontTitle];
 
@@ -12,12 +22,14 @@ class _FieldEntry {
   double fontSize;
   String font;
   String text;
+  double rotation;
 
   _FieldEntry(this.position)
       : key = UniqueKey(),
         fontSize = 22,
         font = fontBody,
-        text = '';
+        text = '',
+        rotation = 0;
 }
 
 class CharacterTemplate extends StatefulWidget {
@@ -105,6 +117,18 @@ class CharacterTemplateState extends State<CharacterTemplate> {
     return idx != -1 ? _fields[idx].font : null;
   }
 
+  void rotateField(UniqueKey key, double delta) {
+    final idx = _fields.indexWhere((f) => f.key == key);
+    if (idx == -1) return;
+    setState(() => _fields[idx].rotation = (_fields[idx].rotation + delta) % (2 * pi));
+  }
+
+  void resetFieldRotation(UniqueKey key) {
+    final idx = _fields.indexWhere((f) => f.key == key);
+    if (idx == -1) return;
+    setState(() => _fields[idx].rotation = 0);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -122,25 +146,31 @@ class CharacterTemplateState extends State<CharacterTemplate> {
             Positioned(
               left: f.position.dx,
               top: f.position.dy,
-              child: _EditingTextField(
-                key: f.key,
-                entry: f,
-                onTextChanged: (v) => f.text = v,
-                onUnfocus: () => _onEditUnfocus(f.key),
-                onMoved: (delta) => setState(() => f.position += delta),
+              child: Transform.rotate(
+                angle: f.rotation,
+                child: _EditingTextField(
+                  key: f.key,
+                  entry: f,
+                  onTextChanged: (v) => f.text = v,
+                  onUnfocus: () => _onEditUnfocus(f.key),
+                  onMoved: (delta) => setState(() => f.position += _toCardSpace(delta, f.rotation)),
+                ),
               ),
             )
           else if (f.text.isNotEmpty)
             Positioned(
               left: f.position.dx,
               top: f.position.dy,
-              child: _DraggableText(
-                key: f.key,
-                entry: f,
-                showHandles: widget.showHandles,
-                selectionNotifier: widget.selectionNotifier,
-                onTap: () => _onTextTapped(f.key),
-                onMoved: (delta) => setState(() => f.position += delta),
+              child: Transform.rotate(
+                angle: f.rotation,
+                child: _DraggableText(
+                  key: f.key,
+                  entry: f,
+                  showHandles: widget.showHandles,
+                  selectionNotifier: widget.selectionNotifier,
+                  onTap: () => _onTextTapped(f.key),
+                  onMoved: (delta) => setState(() => f.position += _toCardSpace(delta, f.rotation)),
+                ),
               ),
             ),
       ],

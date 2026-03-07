@@ -100,6 +100,16 @@ class _CardViewState extends State<CardView> {
     }
   }
 
+  Future<void> _pickCustomSticker() async {
+    final result = await FilePicker.platform.pickFiles(type: FileType.image, withData: true);
+    if (result != null && result.files.single.bytes != null) {
+      setState(() => _placedStickers.add(PlacedSticker.custom(
+        result.files.single.bytes!,
+        const Offset(154, 200), // center of card
+      )));
+    }
+  }
+
   void _onStickerDropped(DragTargetDetails<String> details) {
     final rb = _repaintKey.currentContext?.findRenderObject() as RenderBox?;
     if (rb == null) return;
@@ -116,6 +126,29 @@ class _CardViewState extends State<CardView> {
       });
     } else {
       _templateKey.currentState?.resizeField(key, delta);
+    }
+  }
+
+  void _rotateSelected(double delta) {
+    final key = _selectionNotifier.value;
+    if (key == null) return;
+    if (_selectedIsSticker) {
+      setState(() {
+        final s = _placedStickers.firstWhere((s) => s.key == key);
+        s.rotation = (s.rotation + delta) % (2 * 3.141592653589793);
+      });
+    } else {
+      _templateKey.currentState?.rotateField(key, delta);
+    }
+  }
+
+  void _resetRotation() {
+    final key = _selectionNotifier.value;
+    if (key == null) return;
+    if (_selectedIsSticker) {
+      setState(() => _placedStickers.firstWhere((s) => s.key == key).rotation = 0);
+    } else {
+      _templateKey.currentState?.resetFieldRotation(key);
     }
   }
 
@@ -252,6 +285,24 @@ class _CardViewState extends State<CardView> {
                               ),
                             ],
                           ),
+                          const SizedBox(height: 4),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.rotate_left, color: Colors.white),
+                                onPressed: () => _rotateSelected(-0.2618), // 15°
+                              ),
+                              TextButton(
+                                onPressed: _resetRotation,
+                                child: const Text('Rotation', style: TextStyle(color: Colors.white70, fontFamily: fontBody, fontSize: 18)),
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.rotate_right, color: Colors.white),
+                                onPressed: () => _rotateSelected(0.2618), // 15°
+                              ),
+                            ],
+                          ),
                           if (_selectedIsTextField) ...[
                             const SizedBox(height: 4),
                             Row(
@@ -320,7 +371,7 @@ class _CardViewState extends State<CardView> {
                   ElevatedButton.icon(
                     onPressed: _pickImage,
                     icon: const Icon(Icons.upload_file),
-                    label: const Text('Upload Image', style: TextStyle(color: Colors.black, fontFamily: fontBody, fontSize: 30)),
+                    label: const Text('Upload Character Image', style: TextStyle(color: Colors.black, fontFamily: fontBody, fontSize: 30)),
                   ),
                   const SizedBox(height: 8),
                   ElevatedButton.icon(
@@ -331,7 +382,7 @@ class _CardViewState extends State<CardView> {
                       style: const TextStyle(color: Colors.black, fontFamily: fontBody, fontSize: 30),
                     ),
                   ),
-                  if (_showStickerPanel) _StickerPanel(stickersByCategory: _stickersByCategory),
+                  if (_showStickerPanel) _StickerPanel(stickersByCategory: _stickersByCategory, onUploadSticker: _pickCustomSticker),
                   const SizedBox(height: 8),
                   ElevatedButton.icon(
                     onPressed: _isExporting ? null : _exportCard,
@@ -353,7 +404,8 @@ class _CardViewState extends State<CardView> {
 
 class _StickerPanel extends StatelessWidget {
   final Map<String, List<String>> stickersByCategory;
-  const _StickerPanel({required this.stickersByCategory});
+  final VoidCallback onUploadSticker;
+  const _StickerPanel({required this.stickersByCategory, required this.onUploadSticker});
 
   @override
   Widget build(BuildContext context) {
@@ -372,6 +424,13 @@ class _StickerPanel extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          OutlinedButton.icon(
+            onPressed: onUploadSticker,
+            icon: const Icon(Icons.upload_file, color: Colors.white70),
+            label: const Text('Upload Custom Sticker', style: TextStyle(color: Colors.white70, fontFamily: fontBody, fontSize: 16)),
+            style: OutlinedButton.styleFrom(side: const BorderSide(color: Colors.white24)),
+          ),
+          const SizedBox(height: 8),
           for (final entry in stickersByCategory.entries.toList()
             ..sort((a, b) {
               if (a.key == 'Extras') return 1;

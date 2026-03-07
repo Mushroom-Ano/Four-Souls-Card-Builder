@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'dart:math' show cos, sin, max;
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
@@ -9,9 +9,12 @@ import './card_item_handle.dart';
 class PlacedSticker {
   final UniqueKey key;
   final String assetPath;
+  final Uint8List? imageBytes;
   Offset position;
   double size;
-  PlacedSticker(this.assetPath, this.position) : key = UniqueKey(), size = 210;
+  double rotation;
+  PlacedSticker(this.assetPath, this.position) : key = UniqueKey(), size = 210, imageBytes = null, rotation = 0;
+  PlacedSticker.custom(this.imageBytes, this.position) : key = UniqueKey(), size = 210, assetPath = '', rotation = 0;
 }
 
 class CharacterCard extends StatelessWidget {
@@ -63,22 +66,38 @@ class CharacterCard extends StatelessWidget {
             Positioned(
               left: sticker.position.dx - sticker.size / 2,
               top: sticker.position.dy - sticker.size / 2,
-              child: CardItemHandle(
+              child: Transform.rotate(
+                angle: sticker.rotation,
+                child: CardItemHandle(
                 itemKey: sticker.key,
                 selectionNotifier: selectionNotifier,
                 showHandles: showHandles,
                 fullDrag: true,
-                onMoved: (delta) => onStickerMoved(sticker.key, sticker.position + delta),
-                child: TrimmedStickerImage(
-                  assetPath: sticker.assetPath,
-                  size: sticker.size,
-                ),
+                onMoved: (delta) => onStickerMoved(sticker.key, sticker.position + _toCardSpace(delta, sticker.rotation)),
+                child: sticker.imageBytes != null
+                    ? SizedBox(
+                        width: sticker.size,
+                        height: sticker.size,
+                        child: Image.memory(sticker.imageBytes!, fit: BoxFit.contain),
+                      )
+                    : TrimmedStickerImage(
+                        assetPath: sticker.assetPath,
+                        size: sticker.size,
+                      ),
+              ),
               ),
             ),
         ],
       ),
     );
   }
+}
+
+Offset _toCardSpace(Offset delta, double angle) {
+  if (angle == 0) return delta;
+  final c = cos(angle);
+  final s = sin(angle);
+  return Offset(delta.dx * c - delta.dy * s, delta.dx * s + delta.dy * c);
 }
 
 // Cache of trim results keyed by asset path so each image is decoded once.
